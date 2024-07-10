@@ -20,3 +20,6 @@ class Link(models.Model):
         if not self.code:
             self.code = Hashids(min_length=8).encode(self.pk)
             self.save()
+
+    class Meta:
+        ordering = ('-created_at',)

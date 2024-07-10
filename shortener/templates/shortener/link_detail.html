@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+{% load qr_code %}
+{% block title %}URL acortada{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto mb-5">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-end">
+                        <h6>Tu URL recortada</h6>
+                      <a href="{% url "shortener:delete_link" link.id %}" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if link.name %}<h6>{{ link.name }}</h6>{% endif %}
+                        <div class="input-group my-3">
+                            <input type="url" id="link" value="{{ request.scheme }}://{{ request.get_host }}/{{ link.code }}" readonly class="form-control text-center">
+                            <button onclick="copyToClipboard()" class="btn btn-primary"><i class="bi bi-copy"></i></button>
+                        </div>
+                        <span class="color-custom"><i class="bi bi-arrow-down-up"></i></span>
+                        <input type="url" id="link" value="{{ link.url }}" readonly class="form-control text-center mt-2">
+
+                        <div class="accordion accordion-flush text-center" id="accordionFlushExample">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-custom rounded mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">Ver Código QR&nbsp;<i class="bi bi-qr-code"></i></button>
+                              </h2>
+                              <div id="flush-collapseOne" class="accordion-collapse collapse mt-2" data-bs-parent="#accordionFlushExample">
+                                <img src="{% qr_url_from_text link.url image_format='png' %}" alt="QR Code" width="200px" height="200px">
+                                <a href="{% qr_url_from_text link.url image_format='png' %}" download="qr_code.png" class="btn btn-success"><i class="bi bi-download"></i></a>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-custom rounded mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">Actividad&nbsp;<i class="bi bi-activity"></i></button>
+                              </h2>
+                              <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                <h6 class="my-3">Creado: {{ link.created_at }}</h6>
+                                <h6 class="my-3">Número de visitas: <span class="badge bg-custom rounded-pill">{{ link.clicks }}</span></h6>
+                                <h6 class="my-3">Última visita: {% if link.last_click %}{{ link.last_click }}{% else %}No ha recibido visitas{% endif %}</h6>
+                              </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <script>
+        const link = document.getElementById('link').value;
+      
+        function copyToClipboard() {
+          navigator.clipboard.writeText(link)
+            .then(() => alert('Contenido copiado al portapapeles'))
+            .catch((err) => console.error('Error al copiar:', err));
+        }
+      </script>
+{% endblock %}

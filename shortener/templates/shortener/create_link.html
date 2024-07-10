@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+{% block title %}Acortador de URL's{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto mb-5">
+                <div class="card">
+                    <div class="card-header">
+                      Recorta una URL
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {{ form.name }}
+                            <div class="input-group mt-2">
+                                <button class="btn btn-primary" type="submit" onclick="pasteFromClipboard()"><i class="bi bi-clipboard"></i></button>
+                                {{ form.url }}
+                                <button class="btn btn-success" type="submit"><i class="bi bi-scissors"></i></button>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const url = document.getElementById('id_url');
+      
+        function pasteFromClipboard() {
+            navigator.clipboard.readText()
+            .then(text => {
+              url.value = text
+            })
+            .catch(err => {
+              console.error('Error al leer del portapapeles:', err);
+            });
+        }
+    </script>
+{% endblock %}

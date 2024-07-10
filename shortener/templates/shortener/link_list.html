@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+    <div class="container mt-5 mb-5 text-center">
+        <div class="row">
+            <div class="col-md-6 mx-auto mb-5">
+                <div class="card-header d-flex justify-content-between align-items-baseline px-3">
+                    <h1>Mis links</h1>
+                    <a href="{% url "shortener:create_link" %}" class="btn btn-success">Recortar link</a>
+                </div>
+                <ul class="list-group mt-4">
+                    {% for link in link_list %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {% if link.name %}
+                                {% if request.user_agent.is_mobile %}
+                                    {{ link.name|truncatechars:25 }}
+                                {% else %}
+                                    {{ link.name|truncatechars:40 }}
+                                {% endif %}
+                            {% else %}
+                                {% if request.user_agent.is_mobile %}
+                                    {{ link.url|truncatechars:25 }}
+                                {% else %}
+                                    {{ link.url|truncatechars:40 }}
+                                {% endif %}
+                            {% endif %}
+                            <div> 
+                                <a href="{% url "shortener:detail" link.id link.code %}" class="btn btn-primary btn-sm">Detalles</a>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <p class="mt-4 fs-3">No tienes links guardados</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% include "core/partials/paginator.html" %}
+    </div>
+{% endblock %}

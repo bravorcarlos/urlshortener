@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+    <div class="container mt-5 mb-5 text-center">
+        <div class="row">
+            <div class="col-md-9 mx-auto mb-5">
+                <h1>Crea URLs más cortas</h1>
+                <div class="row mt-5">
+                    <div clas="col-md-6 mx-auto mb-5">
+                        <a class="btn btn-custom" href="{% url "login" %}">Acceder</a>
+                        <a class="btn btn-custom" href="{% url "signup" %}">Registro</a>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-4 mt-3"><h2 class="color-custom display-4"><i class="bi bi-arrows-angle-contract"> + </i><i class="bi bi-qr-code"></i></h2><br><p>Con un solo click obtén una URL mas corta y un código QR que puedes descargar</p></div>
+                    <div class="col-md-4 mt-3"><h2 class="color-custom display-4"><i class="bi bi-floppy-fill"></i></h2><br><p>Guarda y gestiona tus links</p></div>
+                    <div class="col-md-4 mt-3"><h2 class="color-custom display-4"><i class="bi bi-activity"></i></h2><br><p>Obtén estadísticas de visitas a tus links</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

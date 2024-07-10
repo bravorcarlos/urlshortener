@@ -1,0 +1,21 @@
+.btn-custom {
+    background-color: #90c1bb;
+    font-weight: 600;
+}
+
+.bg-custom {
+    background-color: #90c1bb;
+}
+
+.color-custom {
+    color: #90c1bb;
+}
+
+.navbar {
+    box-shadow: 0px 0.05px 3px #c8c8c8;
+}
+
+.nav-link {
+    color: black;
+    font-weight: 600;
+}
